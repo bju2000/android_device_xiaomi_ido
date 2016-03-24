@@ -10,7 +10,7 @@ LOCAL_CERTIFICATE := platform
 LOCAL_PRIVILEGED_MODULE := true
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
-    org.mokee.platform.internal
+    org.cyanogenmod.platform.internal
 
 LOCAL_PROGUARD_FLAG_FILES := proguard.flags
 

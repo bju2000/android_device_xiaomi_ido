@@ -1,2 +1,2 @@
-add_lunch_combo mk_ido-userdebug
-add_lunch_combo mk_ido-eng
+add_lunch_combo cm_ido-userdebug
+add_lunch_combo cm_ido-eng

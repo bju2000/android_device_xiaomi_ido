@@ -23,6 +23,6 @@ $(call inherit-product, device/xiaomi/ido/device.mk)
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := ido
 PRODUCT_NAME := full_ido
-PRODUCT_BRAND := xiaomi
-PRODUCT_MODEL := redmi 3
-PRODUCT_MANUFACTURER := xiaomi
+PRODUCT_BRAND := Xiaomi
+PRODUCT_MODEL := Redmi 3
+PRODUCT_MANUFACTURER := Xiaomi

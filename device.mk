@@ -20,6 +20,9 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
+# System properties
+-include $(LOCAL_PATH)/system_prop.mk
+
 # Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
@@ -40,7 +43,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
-    frameworks/native/data/etc/android.hardware.sensor.stepdetector.xml:system/etc/permissions/android.hardware.sensor.stepdetector.xml
+    frameworks/native/data/etc/android.hardware.sensor.stepdetector.xml:system/etc/permissions/android.hardware.sensor.stepdetector.xml \
+    vendor/cm/prebuilt/common/etc/apns-conf.xml:system/etc/apns-conf.xml
 
 # Screen density
 PRODUCT_AAPT_CONFIG := normal xhdpi xxhdpi
@@ -54,13 +58,7 @@ PRODUCT_BOOT_JARS += qcmediaplayer
 
 # etc
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/etc/clatd.conf:system/etc/clatd.conf \
-    $(LOCAL_PATH)/etc/init.crda.sh:system/etc/init.crda.sh \
-    $(LOCAL_PATH)/etc/init.qcom.bt.sh:system/etc/init.qcom.bt.sh \
-    $(LOCAL_PATH)/etc/init.qcom.coex.sh:system/etc/init.qcom.coex.sh \
-    $(LOCAL_PATH)/etc/lowi.conf:system/etc/lowi.conf \
     $(LOCAL_PATH)/etc/sec_config:system/etc/sec_config \
-    $(LOCAL_PATH)/etc/apns-conf.xml:system/etc/apns-conf.xml \
     $(LOCAL_PATH)/etc/spn-conf.xml:system/etc/spn-conf.xml
 
 # firmware
@@ -140,14 +138,10 @@ PRODUCT_PACKAGES += \
     libantradio
 
 PRODUCT_PACKAGES += \
-    libboringssl-compat
-
-# Connectivity Engine support
-PRODUCT_PACKAGES += \
-    libcnefeatureconfig
-
-PRODUCT_PACKAGES += \
+    libcnefeatureconfig \
+    libboringssl-compat \
     libcamera_flourmo \
+    libshim_camera \
     libstlport
 
 # Doze mode
@@ -178,9 +172,11 @@ PRODUCT_PACKAGES += \
     make_ext4fs \
     setup_fs
 
-# camera
+# Qualcomm
 PRODUCT_PACKAGES += \
-    Snap
+    dsi_config.xml \
+    netmgr_config.xml \
+    qmi_config.xml
 
 # GPS
 PRODUCT_PACKAGES += \
@@ -217,8 +213,9 @@ PRODUCT_PACKAGES += \
 # Media
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
-    frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+    $(LOCAL_PATH)/configs/media_codecs_performance.xml:system/etc/media_codecs_performance.xml \
     $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
     $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml
 
@@ -253,26 +250,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.heapstartsize=16m \
-    dalvik.vm.heapgrowthlimit=192m \
-    dalvik.vm.heapsize=512m
-
-# Debug
-ADDITIONAL_DEFAULT_PROPERTIES += \
-    camera2.portability.force_api=1 \
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.product.locale.language=zh \
-    ro.product.locale.region=CN 
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    keyguard.no_require_sim=true \
-    ro.carrier=unknown \
-    wifi.interface=wlan0 \
-    wifi.supplicant_scan_interval=60 \
-    ro.com.android.dataroaming=true
-
 # Wifi
 PRODUCT_PACKAGES += \
     libwcnss_qmi \
@@ -306,3 +283,4 @@ $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 $(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-2048-hwui-memory.mk)
 
 $(call inherit-product-if-exists, vendor/xiaomi/ido/ido-vendor.mk)
+$(call inherit-product-if-exists, device/xiaomi/ido/vendor/copyfiles.mk)
