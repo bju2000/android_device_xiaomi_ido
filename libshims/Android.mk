@@ -1,5 +1,6 @@
 LOCAL_PATH := $(call my-dir)
 
+# camera sensors
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := \
@@ -13,6 +14,7 @@ LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 
 include $(BUILD_SHARED_LIBRARY)
 
+# camera
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := \
@@ -24,6 +26,7 @@ LOCAL_MODULE_TAGS := optional
 
 include $(BUILD_SHARED_LIBRARY)
 
+# healthd
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := healthd_board_ido.cpp
