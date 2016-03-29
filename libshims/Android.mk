@@ -29,7 +29,9 @@ include $(BUILD_SHARED_LIBRARY)
 # healthd
 include $(CLEAR_VARS)
 
-LOCAL_SRC_FILES := healthd_board_ido.cpp
+LOCAL_SRC_FILES := \
+    healthd/healthd_board_ido.cpp
+
 LOCAL_MODULE := libhealthd.ido
 LOCAL_C_INCLUDES := system/core/healthd
 LOCAL_CFLAGS := -Werror
